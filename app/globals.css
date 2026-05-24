@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ── Reset ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; height: 100%; }
+body { background: #F5F0E8; -webkit-font-smoothing: antialiased; margin: 0; padding: 0; }
+#__next { display: flex; flex-direction: column; }
+img, svg { display: block; max-width: 100%; }
+input, select, textarea, button { font: inherit; }
+
+/* ── Typography ─────────────────────────────────────────────────── */
+.nav-link {
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(10px, 1.3vw, 13px);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  transition: color .2s;
+  padding: 6px 0;
+  border-bottom: 1.5px solid transparent;
+  white-space: nowrap;
+}
+.nav-link:hover { border-bottom-color: #C9A84C; }
+
+/* ── Cards ──────────────────────────────────────────────────────── */
+.card {
+  background: #fff;
+  border: 1px solid #E5DFD3;
+  transition: transform .2s, box-shadow .2s;
+}
+@media (hover: hover) {
+  .card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(26,58,42,.10); }
+}
+
+/* ── Buttons ────────────────────────────────────────────────────── */
+.btn-primary {
+  background: #1A3A2A;
+  color: #F5F0E8;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 11px 24px;
+  transition: background .2s;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.btn-primary:hover:not(:disabled) { background: #2D5A3F; }
+.btn-primary:active:not(:disabled) { background: #0F2318; }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid currentColor;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 9px 20px;
+  transition: all .2s;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.btn-outline:hover { opacity: .8; }
+.btn-outline:active { opacity: .6; }
+
+/* ── Form fields ────────────────────────────────────────────────── */
+.input-field {
+  width: 100%;
+  border: 1.5px solid #D5CFCA;
+  background: #FDFAF5;
+  padding: 10px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #1A1A1A;
+  outline: none;
+  transition: border-color .2s;
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.input-field:focus { border-color: #4A8C5C; }
+select.input-field { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7A6E' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
+
+/* ── Time slots ─────────────────────────────────────────────────── */
+.slot {
+  border: 1.5px solid #D5CFCA;
+  padding: 7px 12px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  transition: all .15s;
+  color: #1A3A2A;
+  border-radius: 2px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  min-width: 58px;
+  text-align: center;
+}
+.slot:hover:not(.taken) { background: #F0E4C0; border-color: #C9A84C; }
+.slot.selected { background: #1A3A2A; color: #F5F0E8; border-color: #1A3A2A; }
+.slot.taken { background: #F0EDE8; color: #BBB; cursor: not-allowed; text-decoration: line-through; }
+
+/* ── Calendar (booking mini-cal) ────────────────────────────────── */
+.cal-day {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  border-radius: 50%;
+  transition: all .15s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+@media (max-width: 400px) {
+  .cal-day { width: 32px; height: 32px; font-size: 11px; }
+}
+.cal-day:hover:not(.empty):not(.past) { background: #F0E4C0; }
+.cal-day.selected { background: #1A3A2A; color: white; }
+.cal-day.today { border: 1.5px solid #C9A84C; }
+.cal-day.past { color: #CCC; cursor: default; }
+.cal-day.empty { cursor: default; }
+
+/* ── Appointment row ────────────────────────────────────────────── */
+.appt-row {
+  display: grid;
+  grid-template-columns: 90px 70px 1fr 140px;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #F0EBE0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+}
+.appt-row:hover { background: #FDFAF5; }
+@media (max-width: 600px) {
+  .appt-row { grid-template-columns: 80px 60px 1fr; gap: 8px; }
+  .appt-row > :last-child { grid-column: 1 / -1; }
+}
+
+/* ── Animations ─────────────────────────────────────────────────── */
+.fade-in { animation: fadeIn .35s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Calendar slot hover ────────────────────────────────────────── */
+.cal-slot-hover { opacity: 0 !important; }
+div:hover > .cal-slot-hover { opacity: 1 !important; }
+
+/* ── Scrollbar (thin, themed) ───────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D5CFCA; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #B8B0A8; }
+
+/* ── Mobile safe areas ──────────────────────────────────────────── */
+@supports (padding: max(0px)) {
+  header { padding-left: max(12px, env(safe-area-inset-left)); padding-right: max(12px, env(safe-area-inset-right)); }
+  footer { padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+}
+
+/* ── Focus visible (accessibility) ─────────────────────────────── */
+:focus-visible { outline: 2px solid #4A8C5C; outline-offset: 2px; }
+button:focus-visible, a:focus-visible { outline: 2px solid #C9A84C; }
+
+/* ── Touch targets (min 44px on mobile) ─────────────────────────── */
+@media (max-width: 768px) {
+  .btn-primary, .btn-outline { min-height: 44px; }
+  .slot { min-height: 40px; }
+  .nav-link { padding: 8px 2px; }
+}
+
+/* ── Responsive grid utility ────────────────────────────────────── */
+.grid-2col { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.grid-3col { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+
+/* ── Rounded corners ────────────────────────────────────────────── */
+.input-field { border-radius: 6px !important; }
+.btn-primary { border-radius: 6px !important; }
+.btn-outline { border-radius: 6px !important; }
+.slot { border-radius: 6px !important; }
+.card { border-radius: 8px !important; }
+
+/* ── Mobile: sidebar overlay mode ──────────────────────────────── */
+@media (max-width: 700px) {
+  /* Sidebar becomes horizontal tab bar on mobile */
+  .dashboard-layout { flex-direction: column !important; }
+  .sidebar-nav { 
+    width: 100% !important; 
+    flex-direction: row !important;
+    overflow-x: auto;
+    padding: 0 !important;
+    height: auto !important;
+    min-height: 48px;
+    border-bottom: 2px solid rgba(255,255,255,.1);
+  }
+  .sidebar-nav > div:first-child {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .sidebar-nav > div:last-child { display: none !important; }
+  .sidebar-tab {
+    padding: 12px 14px !important;
+    border-left: none !important;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .sidebar-tab.active { border-bottom-color: #C9A84C !important; border-left: none !important; }
+}
+
+/* ── Mobile: action buttons larger touch targets ─────────────────── */
+@media (max-width: 768px) {
+  .action-btn { min-height: 36px !important; min-width: 36px !important; padding: 8px 12px !important; font-size: 12px !important; }
+  .table-btn { min-height: 32px !important; padding: 6px 12px !important; font-size: 11px !important; }
+}
+
+/* ── Calendar: scroll on mobile ─────────────────────────────────── */
+@media (max-width: 900px) {
+  .calendar-grid { font-size: 11px !important; }
+  .calendar-grid .slot { padding: 4px 6px !important; font-size: 10px !important; }
+}
